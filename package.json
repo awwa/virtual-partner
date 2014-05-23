@@ -1,0 +1,22 @@
+{
+  "name": "virtual-partner",
+  "version": "0.0.1",
+  "description": "Your virtual partner.",
+  "main": "app.js",
+  "repository": "https://github.com/awwa/virtual-partner.git",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "keywords": [
+    "partner"
+  ],
+  "author": "Wataru Sato <awwa500@gmail.com> (@awwa500)",
+  "license": "MIT",
+  "dependencies": {
+    "express": "~4.0.0",
+    "dotenv": "*",
+    "multiparty": "*",
+    "sendgrid": "*"
+  }
+}
