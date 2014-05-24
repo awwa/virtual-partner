@@ -21,6 +21,7 @@ app.post('/vp', function(req, res) {
           var email = sender.match(reg);
           var sendgrid = require('sendgrid')(sendgrid_username, sendgrid_password);
           var sgMail = new sendgrid.Email();
+          var a = 1 / 0;
           sgMail.addTo(email);
           sgMail.setFrom(from);
           sgMail.fromname = from_name;
@@ -35,8 +36,9 @@ app.post('/vp', function(req, res) {
   } catch (e) {
     console.log(e);
     err = e;
+  } finally {
+    res.send(err);
   }
-  res.send(err);
 });
 
 app.listen(process.env.PORT || 7076);
