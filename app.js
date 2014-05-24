@@ -14,7 +14,7 @@ app.post('/vp', function(req, res) {
     form.parse(req, function(err, fields, files){
         console.log(require('util').inspect(fields, false));
 
-        fs.readFile('./あmail.txt', 'utf8', function(err, text) {
+        fs.readFile('./mail.txt', 'utf8', function(err, text) {
           var sender = fields.from[0];
           var subject = fields.subject;
           var reg = /[A-Za-z0-9\-\.\_]+@[A-Za-z0-9\-\_]+\.[A-Za-z0-9\-\.\_]+/;
