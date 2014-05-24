@@ -7,30 +7,36 @@ var from_name = process.env.FROM_NAME;
 
 var app = require('express')();
 app.post('/vp', function(req, res) {
-  var multiparty = require('multiparty');
-  var form = new multiparty.Form();
-  form.parse(req, function(err, fields, files){
-      console.log(require('util').inspect(fields, false));
+  var err;
+  try {
+    var multiparty = require('multiparty');
+    var form = new multiparty.Form();
+    form.parse(req, function(err, fields, files){
+        console.log(require('util').inspect(fields, false));
 
-      fs.readFile('./mail.txt', 'utf8', function(err, text) {
-        var sender = fields.from[0];
-        var subject = fields.subject;
-        var reg = /[A-Za-z0-9\-\.\_]+@[A-Za-z0-9\-\_]+\.[A-Za-z0-9\-\.\_]+/;
-        var email = sender.match(reg);
-        var sendgrid = require('sendgrid')(sendgrid_username, sendgrid_password);
-        var sgMail = new sendgrid.Email();
-        sgMail.addTo(email);
-        sgMail.setFrom(from);
-        sgMail.fromname = from_name;
-        sgMail.setSubject('Re: ' + subject);
-        sgMail.setText(text + '\r\n' + from_name + '\r\n' + from);
-        sendgrid.send(sgMail, function(err, json){
-          if (err) { return console.error(err);}
-          console.log(json);
+        fs.readFile('./mail.txt', 'utf8', function(err, text) {
+          var sender = fields.from[0];
+          var subject = fields.subject;
+          var reg = /[A-Za-z0-9\-\.\_]+@[A-Za-z0-9\-\_]+\.[A-Za-z0-9\-\.\_]+/;
+          var email = sender.match(reg);
+          var sendgrid = require('sendgrid')(sendgrid_username, sendgrid_password);
+          var sgMail = new sendgrid.Email();
+          sgMail.addTo(email);
+          sgMail.setFrom(from);
+          sgMail.fromname = from_name;
+          sgMail.setSubject('Re: ' + subject);
+          sgMail.setText(text + '\r\n' + from_name + '\r\n' + from);
+          sendgrid.send(sgMail, function(err, json){
+            if (err) { return console.error(err);}
+            console.log(json);
+          });
         });
-      });
-  }); 
-  res.send('');
+    }); 
+  } catch (e) {
+    console.log(e);
+    err = e;
+  }
+  res.send(err);
 });
 
 app.listen(process.env.PORT || 7076);
