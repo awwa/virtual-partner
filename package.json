@@ -6,7 +6,7 @@
   "repository": "https://github.com/awwa/virtual-partner.git",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node --harmony app.js"
   },
   "keywords": [
     "partner"
